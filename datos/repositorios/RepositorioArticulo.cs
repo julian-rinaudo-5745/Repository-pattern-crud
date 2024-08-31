@@ -1,9 +1,7 @@
 ﻿using Practica01.datos.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+
 
 namespace Practica01.datos.repositorios
 {
@@ -11,15 +9,132 @@ namespace Practica01.datos.repositorios
     {
         public List<Articulo> ObtenerTodo()
         {
-            throw new NotImplementedException();
+            List<Articulo> listArticulos = new List<Articulo>();
+
+            try
+            {
+                using (var cnn = new SqlConnection(cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_OBTENER_TODOS_ARTCULOS", cnn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Articulo articulo = new Articulo
+                        {
+                            Id = (int)reader["id"],
+                            Nombre = (string)reader["nombre"],
+                            PrecioUnitario = (int)reader["precio_unitario"]
+                        };
+
+                        listArticulos.Add(articulo);
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al obtener todos los articulos. Error: {ex.Message}");
+            }
+
+            return listArticulos;
+
         }
-        public bool Guardar(Articulo articulo)
+        public bool Crear(Articulo articulo)
         {
-            throw new NotImplementedException();
+            var resultado = false;
+
+            try
+            {
+                using(var cnn = new SqlConnection(cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_INSERTAR_ARTICULO", cnn);
+
+                    cmd.CommandType= CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("nombre", articulo.Nombre);
+                    cmd.Parameters.AddWithValue("precio_unitario", articulo.PrecioUnitario);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    resultado = filasAfectadas == 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al crear un articulo. Error: {ex.Message}");
+            }
+
+            return resultado;
+        }
+
+        public bool Editar(Articulo articulo)
+        {
+            bool resultado = false;
+
+            try
+            {
+                using (var cnn = new SqlConnection(cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_EDITAR_ARTICULO", cnn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("id", articulo.Id);
+                    cmd.Parameters.AddWithValue("nombre", articulo.Nombre);
+                    cmd.Parameters.AddWithValue("precio_unitario", articulo.PrecioUnitario);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    resultado = filasAfectadas == 1;
+
+                } ;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Error inesperado al editar un articulo. Error: {ex.Message}");
+            }
+
+            return resultado;
         }
         public bool Eliminar(int articuloId)
         {
-            throw new NotImplementedException();
+            bool resultado = false;
+
+            try
+            {
+                using (var cnn = new SqlConnection(cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_ELIMINAR_ARTICULO", cnn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("id", articuloId);
+
+                   int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    resultado = filasAfectadas == 1;  
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Error inesperado al eliminar un articulo. Error: {ex.Message}");
+            }
+
+            return resultado;   
         }
 
 
