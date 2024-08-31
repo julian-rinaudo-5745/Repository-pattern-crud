@@ -1,4 +1,6 @@
 ﻿
+using Practica01.dominio;
+
 namespace Practica01.datos.interfaces
 {
     public interface IArticulo

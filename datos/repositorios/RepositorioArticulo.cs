@@ -1,4 +1,5 @@
 ﻿using Practica01.datos.interfaces;
+using Practica01.dominio;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -13,11 +14,11 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                using (var cnn = new SqlConnection(cnnString))
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
                 {
                     cnn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SP_OBTENER_TODOS_ARTCULOS", cnn);
+                    SqlCommand cmd = new SqlCommand("SP_OBTENER_ARTICULOS", cnn);
 
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -25,11 +26,11 @@ namespace Practica01.datos.repositorios
 
                     while (reader.Read())
                     {
-                        Articulo articulo = new Articulo
+                        Articulo articulo = new Articulo()
                         {
                             Id = (int)reader["id"],
                             Nombre = (string)reader["nombre"],
-                            PrecioUnitario = (int)reader["precio_unitario"]
+                            PrecioUnitario = (decimal)reader["precio_unitario"]
                         };
 
                         listArticulos.Add(articulo);
@@ -51,7 +52,7 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                using(var cnn = new SqlConnection(cnnString))
+                using(var cnn = new SqlConnection(Properties.Resources.cnnString))
                 {
                     cnn.Open();
 
@@ -81,7 +82,7 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                using (var cnn = new SqlConnection(cnnString))
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
                 {
                     cnn.Open();
 
@@ -113,7 +114,7 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                using (var cnn = new SqlConnection(cnnString))
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
                 {
                     cnn.Open();
 

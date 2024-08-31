@@ -1,10 +1,12 @@
-﻿using Practica01.datos;
+﻿
+using Practica01.dominio;
 using Practica01.datos.interfaces;
 using Practica01.datos.repositorios;
 
 
 
 namespace Practica01.servicios
+
 {
     public class ServicioArticulo
     {
@@ -35,7 +37,7 @@ namespace Practica01.servicios
 
             if (articulo != null)
             {
-                if (String.IsNullOrEmpty(articulo.Nombre) || articulo.PrecioUnitario <= 0)
+                if (String.IsNullOrEmpty(articulo.Nombre) || articulo.PrecioUnitario < 1)
                 {
                     Console.Error.WriteLine("Debe ingresar un nombre o un precio mayor a 0");
                     return false;
@@ -64,7 +66,7 @@ namespace Practica01.servicios
                 if (String.IsNullOrEmpty(articulo.Nombre) || articulo.PrecioUnitario <= 0 || articulo.Id == 0)
                 {
                     Console.Error.WriteLine(
-                            $"Datos invalidos. Id:{articulo.Id}, Nombre: {articulo.Nombre}, Precio: {articulo.PrecioUnitario}"
+                            $"No todos los datos son válidos. Id:{articulo.Id}, Nombre: {articulo.Nombre}, Precio: {articulo.PrecioUnitario}"
                         );
                     return false;
                 }
@@ -72,7 +74,7 @@ namespace Practica01.servicios
                 try
                 {
                     resultado = repositorioArticulo.Editar(articulo);
-                    Console.WriteLine("Articulo creado con éxito");
+                    Console.WriteLine("Articulo editado con éxito");
                 }
                 catch (Exception ex)
                 {
@@ -97,6 +99,7 @@ namespace Practica01.servicios
             try
             {
                 resultado = repositorioArticulo.Eliminar(articuloId);
+                Console.WriteLine("Articulo eliminado con éxito");
             }
             catch (Exception ex)
             {
