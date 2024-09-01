@@ -26,7 +26,7 @@ namespace Practica01.datos.repositorios
 
                     while (reader.Read())
                     {
-                        Articulo articulo = new Articulo
+                        Articulo articulo = new Articulo()
                         {
                             Id = (int)reader["id"],
                             Nombre = (string)reader["nombre"],
@@ -44,6 +44,42 @@ namespace Practica01.datos.repositorios
             }
 
             return listArticulos;
+
+        }
+        public Articulo ObtenerPorId(int id)
+        {
+            Articulo articulo = new Articulo();
+
+            try
+            {
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_OBTENER_ARTICULO", cnn);
+
+                    cmd.Parameters.AddWithValue("id", id);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if(reader.Read())
+                    {
+                        articulo.Id = (int)reader["id"];
+                        articulo.Nombre = (string)reader["nombre"];
+                        articulo.PrecioUnitario = (decimal)reader["precio_unitario"];
+                     
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al obtener un articulo. Error: {ex.Message}");
+            }
+
+            return articulo;
 
         }
         public bool Crear(Articulo articulo)

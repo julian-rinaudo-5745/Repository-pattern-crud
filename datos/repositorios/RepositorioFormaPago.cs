@@ -48,6 +48,37 @@ namespace Practica01.datos.repositorios
 
             return listFormasPago;
         }
+        public FormaPago ObtenerPorId(int id)
+        {
+            FormaPago articulo = new FormaPago();
+
+            try
+            {
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_OBTENER_FORMA_PAGO", cnn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        articulo.Id = (int)reader["id"];
+                        articulo.Nombre = (string)reader["nombre"];
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al obtener una forma de pago. Error: {ex.Message}");
+            }
+
+            return articulo;
+        }
         public bool Crear(FormaPago formaPago)
         {
             var resultado = false;

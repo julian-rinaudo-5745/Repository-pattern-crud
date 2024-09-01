@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Practica01.datos
+namespace Practica01.dominio
 {
     public class DetalleFactura
-    {
+    { 
         public Articulo Articulo { get; set; }
-        public int cantidad { get; set; }
+        public int Cantidad { get; set; }
     }
 }

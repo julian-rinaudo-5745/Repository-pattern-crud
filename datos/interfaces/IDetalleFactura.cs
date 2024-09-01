@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Practica01.dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,8 @@ namespace Practica01.datos.interfaces
     public interface IDetalleFactura
     {
         public List<DetalleFactura> ObtenerTodo();
-        //Para crear o editar
-        public bool Guardar(DetalleFactura detalleFactura);
+        public bool Crear(int nroFactura, DetalleFactura detalleFactura);
+        public bool Editar(DetalleFactura detalleFactura);
         public bool Eliminar(int detalleId);
     }
 }

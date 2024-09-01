@@ -6,8 +6,9 @@ namespace Practica01.datos.interfaces
     public interface IArticulo
     {
         public List<Articulo> ObtenerTodo();
+        public Articulo ObtenerPorId(int id);
         public bool Crear(Articulo articulo);
         public bool Editar(Articulo articulo);
-        public bool Eliminar(int articuloId);
+        public bool Eliminar(int articuloId); 
     }
 }

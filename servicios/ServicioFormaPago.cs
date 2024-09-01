@@ -34,7 +34,20 @@ namespace Practica01.servicios
 
             return articulos;
         }
+        public FormaPago ObtenerPorId(int id)
+        {
+            FormaPago formaPago = new FormaPago();
+            try
+            {
+                formaPago = repositorioFormaPago.ObtenerPorId(id);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
 
+            return formaPago;
+        }
         public bool Crear(FormaPago formaPago)
         {
             bool resultado = false;
@@ -68,11 +81,9 @@ namespace Practica01.servicios
 
             if (formaPago != null)
             {
-                if (String.IsNullOrEmpty(formaPago.Nombre) || formaPago.Id == 0)
+                if (formaPago.Id == 0)
                 {
-                    Console.Error.WriteLine(
-                            $"No todos los datos son válidos. Id: {formaPago.Id}, Nombre: {formaPago.Nombre}"
-                        );
+                    Console.Error.WriteLine($"Id no válido. Id: {formaPago.Id}");
                     return false;
                 }
 
