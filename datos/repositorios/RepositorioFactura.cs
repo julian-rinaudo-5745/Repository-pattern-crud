@@ -13,15 +13,19 @@ namespace Practica01.datos.repositorios
         {
             throw new NotImplementedException();
         }
-        public bool Guardar(Factura factura)
-        {
-            throw new NotImplementedException();
-        }
         public bool Eliminar(int nroFactura)
         {
             throw new NotImplementedException();
         }
 
+        public bool Crear(Factura factura)
+        {
+            throw new NotImplementedException();
+        }
 
+        public bool Editar(Factura factura)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

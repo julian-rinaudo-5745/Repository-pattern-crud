@@ -26,7 +26,7 @@ namespace Practica01.datos.repositorios
 
                     while (reader.Read())
                     {
-                        Articulo articulo = new Articulo()
+                        Articulo articulo = new Articulo
                         {
                             Id = (int)reader["id"],
                             Nombre = (string)reader["nombre"],

@@ -10,7 +10,8 @@ namespace Practica01.datos.interfaces
     {
         public List<Factura> ObtenerTodo();
         //Para crear o editar
-        public bool Guardar(Factura factura);
+        public bool Crear(Factura factura);
+        public bool Editar(Factura factura);
         public bool Eliminar(int nroFactura);
 
     }

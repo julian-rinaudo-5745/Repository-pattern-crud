@@ -1,8 +1,13 @@
-﻿using Practica01.dominio;
+﻿using Practica01.datos;
+using Practica01.dominio;
 using Practica01.servicios;
 
 
 ServicioArticulo servicioArticulo = new ServicioArticulo();
+ServicioFormaPago servicioFormaPago = new ServicioFormaPago();
+/*
+ * CRUD ARTICULOs
+ */
 
 
 Articulo articulo1 = new Articulo
@@ -34,7 +39,40 @@ servicioArticulo.Eliminar(2);
 //TRAEMOS TODOS LOS ARTICULOS
 List<Articulo> articulos = servicioArticulo.ObtenerTodo();
 
-Console.WriteLine(articulos);
+
+foreach (var articulo in articulos)
+{
+    Console.WriteLine($"Id: {articulo.Id}, Nombre: {articulo.Nombre}, Precio unitario: {articulo.PrecioUnitario}");
+}
+
+/*
+ * CRUD FormasPago
+ */
+
+FormaPago formaPago = new FormaPago
+{
+    Nombre = "Credito"
+};
+
+//CREAMOS FORMA DE PAGO
+servicioFormaPago.Crear(formaPago);
+
+//EDITAMOS FORMA DE PAGO
+formaPago.Id = 3;
+formaPago.Nombre = "Cheque";
+
+servicioFormaPago.Editar(formaPago);
+
+//Eliminamos FORMA DE PAGO
+servicioFormaPago.Eliminar(2);
+
+//TRAEMOS TODAS LAS FORMAS DE PAGO
+List<FormaPago> formaPagos = servicioFormaPago.ObtenerTodo();
+
+foreach(var fp in formaPagos)
+{
+    Console.WriteLine($"Id: {fp.Id}, Nombre: {fp.Nombre}");
+}
 
 
 

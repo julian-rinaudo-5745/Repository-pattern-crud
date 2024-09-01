@@ -66,7 +66,7 @@ namespace Practica01.servicios
                 if (String.IsNullOrEmpty(articulo.Nombre) || articulo.PrecioUnitario <= 0 || articulo.Id == 0)
                 {
                     Console.Error.WriteLine(
-                            $"No todos los datos son válidos. Id:{articulo.Id}, Nombre: {articulo.Nombre}, Precio: {articulo.PrecioUnitario}"
+                            $"No todos los datos son válidos. Id: {articulo.Id}, Nombre: {articulo.Nombre}, Precio: {articulo.PrecioUnitario}"
                         );
                     return false;
                 }
