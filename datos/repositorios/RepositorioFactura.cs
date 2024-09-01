@@ -128,7 +128,7 @@ namespace Practica01.datos.repositorios
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error inesperado al crear factura. Error: {ex.Message}");
+                throw new Exception($"Error inesperado al editar factura. Error: {ex.Message}");
             }
             return resultado;
         }
