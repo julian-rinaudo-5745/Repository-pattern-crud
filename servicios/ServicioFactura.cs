@@ -57,25 +57,29 @@ namespace Practica01.servicios
                 }
 
                 
-                    try
-                    {
-                        resultado = _unitOfWork.RepositorioFactura.Crear(factura);
+                try
+                {
+                    int nroFactura = _unitOfWork.RepositorioFactura.Crear(factura);
 
-                        Console.WriteLine("Factura creada con éxito");
+                    if (nroFactura > 0)
+                    {
+                        foreach (DetalleFactura detalle in factura.Detalles)
+                        {
+                            _unitOfWork.RepositorioDetalleFactura.Crear(nroFactura, detalle);
+                        }
+                    }
 
-                        _unitOfWork.GuardarCambios();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.Error.WriteLine(ex.Message);
-                    }
-                    finally
-                    {
+                    _unitOfWork.GuardarCambios();
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+                finally
+                {
                     _unitOfWork.Dispose();  
-                    }
+                }
                 
-                   
-
             }
 
             return resultado;
@@ -85,31 +89,31 @@ namespace Practica01.servicios
         {
             bool resultado = false;
 
-            int nroFactura = factura.NroFactura;
+            //int nroFactura = factura.NroFactura;
 
-            if (factura != null)
-            {
-                if (nroFactura == 0)
-                {
-                    Console.Error.WriteLine($"Número de factura no válido. Nro factura:{nroFactura}");
-                    return false;
-                }
+            //if (factura != null)
+            //{
+            //    if (nroFactura == 0)
+            //    {
+            //        Console.Error.WriteLine($"Número de factura no válido. Nro factura:{nroFactura}");
+            //        return false;
+            //    }
 
-                try
-                {
-                    resultado = _unitOfWork.RepositorioFactura.Crear(factura);
-                    Console.WriteLine("Factura Editada con éxito");
-                }
-                catch (Exception ex)
-                {
-                    Console.Error.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    _unitOfWork.Dispose();
-                }
+            //    try
+            //    {
+            //        resultado = _unitOfWork.RepositorioFactura.Crear(factura);
+            //        Console.WriteLine("Factura Editada con éxito");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Console.Error.WriteLine(ex.Message);
+            //    }
+            //    finally
+            //    {
+            //        _unitOfWork.Dispose();
+            //    }
 
-            }
+            //}
 
             return resultado;
         }

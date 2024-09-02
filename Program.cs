@@ -97,7 +97,7 @@ Factura factura = new Factura()
         },
         new DetalleFactura()
         {
-            Articulo = new Articulo() { Id = 2  },
+            Articulo = new Articulo() { Id = 3  },
             Cantidad = 1,
             PrecioVenta = 2400.20M
         }

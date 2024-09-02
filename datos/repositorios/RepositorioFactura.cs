@@ -70,9 +70,9 @@ namespace Practica01.datos.repositorios
 
             return facturas;
         }
-        public bool Crear(Factura factura)
+        public int Crear(Factura factura)
         {
-            bool resultado = false;
+            int nroFactura = 0;
 
             try
             {
@@ -88,21 +88,16 @@ namespace Practica01.datos.repositorios
                 cmd.Parameters.Add(param);
                 cmd.ExecuteNonQuery();
 
-                int nroFactura = (int)param.Value;
-
-                foreach (DetalleFactura detalle in factura.Detalles)
-                {
-                    servicioDetalleFactura.Crear(nroFactura, detalle);
-                }
-
-                resultado = true;
+                nroFactura = (int)param.Value;
+                    
                 
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error inesperado al crear factura. Error: {ex.Message}");
             }
-            return resultado;
+
+            return nroFactura;
         }
 
         public bool Editar(Factura factura)

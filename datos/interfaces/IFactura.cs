@@ -10,7 +10,7 @@ namespace Practica01.datos.interfaces
     public  interface IFactura
     {
         public List<Factura> ObtenerTodo();
-        public bool Crear(Factura factura);
+        public int Crear(Factura factura);
         public bool Editar(Factura factura);
         public bool Eliminar(int nroFactura);
 
