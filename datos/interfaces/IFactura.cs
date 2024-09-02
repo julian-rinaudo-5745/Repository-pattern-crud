@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Practica01.dominio
+using Practica01.dominio;
 
 namespace Practica01.datos.interfaces
 {

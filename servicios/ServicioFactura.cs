@@ -42,7 +42,7 @@ namespace Practica01.servicios
         {
             bool resultado = false;
 
-            if(factura != null)
+            if (factura != null)
             {
                 if (factura.FormaPago.Id == 0)
                 {
@@ -55,19 +55,26 @@ namespace Practica01.servicios
                     Console.Error.WriteLine("El cliente es requerido");
                     return false;
                 }
-                try
-                {
-                    resultado = _unitOfWork.RepositorioFactura.Crear(factura);
-                    Console.WriteLine("Factura creada con éxito");
-                }
-                catch (Exception ex)
-                {
-                    Console.Error.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    _unitOfWork.Dispose();
-                }
+
+                
+                    try
+                    {
+                        resultado = _unitOfWork.RepositorioFactura.Crear(factura);
+
+                        Console.WriteLine("Factura creada con éxito");
+
+                        _unitOfWork.GuardarCambios();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine(ex.Message);
+                    }
+                    finally
+                    {
+                    _unitOfWork.Dispose();  
+                    }
+                
+                   
 
             }
 

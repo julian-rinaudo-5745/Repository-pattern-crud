@@ -4,19 +4,27 @@ using Practica01.servicios;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Practica01.datos.repositorios
 {
     public class RepositorioFactura : IFactura
     {
+        private SqlConnection _connection;
+        private SqlTransaction _transaction;
         private ServicioFormaPago servicioFormaPago;
         private ServicioDetalleFactura servicioDetalleFactura;
-        public RepositorioFactura()
+
+        public RepositorioFactura() { }
+        public RepositorioFactura(SqlConnection connection, SqlTransaction transaction)
         {
+            _connection = connection;
+            _transaction = transaction;
             servicioFormaPago = new ServicioFormaPago();
             servicioDetalleFactura = new ServicioDetalleFactura();
         }
@@ -48,7 +56,7 @@ namespace Practica01.datos.repositorios
                             Fecha = (DateTime)reader["fecha"],
                             FormaPago = servicioFormaPago.ObtenerPorId(idFormaPago),
                             Cliente = (string)reader["cliente"],
-                            Detalles = servicioDetalleFactura.ObtenerPorIdONroFactura(null, nroFactura)
+                            //Detalles = servicioDetalleFactura.ObtenerPorIdONroFactura(null, nroFactura)
                         };
 
                         facturas.Add(factura);
@@ -68,7 +76,7 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                SqlCommand cmd = new SqlCommand("SP_CREAR_FACTURA");
+                SqlCommand cmd = new SqlCommand("SP_CREAR_FACTURA", _connection, _transaction);
 
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -118,7 +126,7 @@ namespace Practica01.datos.repositorios
                 {
                     foreach (DetalleFactura detalle in factura.Detalles)
                     {
-                        servicioDetalleFactura.Editar(detalle);
+                        //servicioDetalleFactura.Editar(detalle);
                     }
 
                 }
@@ -144,7 +152,7 @@ namespace Practica01.datos.repositorios
 
                 cmd.ExecuteNonQuery();
 
-                servicioDetalleFactura.Eliminar(null, nroFactura);
+                //servicioDetalleFactura.Eliminar(null, nroFactura);
             }
             catch (Exception ex)
             {

@@ -21,7 +21,7 @@ namespace Practica01.datos.UnitOfWork
             {
                 if( _repositorioFactura == null)
                 {
-                    _repositorioFactura = new RepositorioFactura();
+                    _repositorioFactura = new RepositorioFactura(_connection, _transaction);
                 }
                 return _repositorioFactura;
             }
@@ -32,7 +32,7 @@ namespace Practica01.datos.UnitOfWork
             {
                 if (_repositorioDetalleFactura == null)
                 {
-                    _repositorioDetalleFactura = new RepositorioDetalleFactura();
+                    _repositorioDetalleFactura = new RepositorioDetalleFactura(_connection, _transaction);
                 }
                 return _repositorioDetalleFactura;
             }
