@@ -13,6 +13,6 @@ namespace Practica01.datos.interfaces
         List<DetalleFactura> ObtenerPorNroFactura(int nroFactura);
         public bool Crear(int nroFactura, DetalleFactura detalleFactura);
         public bool Editar(DetalleFactura detalleFactura, int nroFactura);
-        public bool Eliminar(int detalleId);
+        public bool Eliminar(int nroFactura);
     }
 }

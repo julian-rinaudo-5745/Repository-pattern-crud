@@ -129,18 +129,19 @@ namespace Practica01.servicios
         {
             bool resultado = false;
 
-            if (nroFactura != 0)
+            if (nroFactura != null && nroFactura > 0)
             {
                 try
                 {
-                    resultado = _unitOfWork.RepositorioFactura.Eliminar(nroFactura);
+                    resultado = _unitOfWork.RepositorioDetalleFactura.Eliminar(nroFactura);
+
                     if (resultado)
                     {
-
-                        Console.WriteLine("Factura Editada con éxito");
+                          _unitOfWork.RepositorioFactura.Eliminar(nroFactura);
+                    
                     }
 
-
+                    _unitOfWork.GuardarCambios();
                 }
                 catch (Exception ex)
                 {

@@ -166,9 +166,30 @@ namespace Practica01.datos.repositorios
             return resultado;
         }
 
-        public bool Eliminar(int detalleId)
+        public bool Eliminar(int nroFactura)
         {
-            throw new NotImplementedException();
+            bool resultado = false;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("SP_ELIMINAR_DETALLE", _connection, _transaction);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                cmd.Parameters.AddWithValue("nro_factura", nroFactura);
+                                
+                cmd.ExecuteNonQuery();
+
+                resultado = true;
+            }
+
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al eliminar un detalle. Error: {ex.Message}");
+            }
+
+            return resultado;
         }
 
     }

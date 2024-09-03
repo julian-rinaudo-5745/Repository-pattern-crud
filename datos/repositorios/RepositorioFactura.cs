@@ -138,13 +138,15 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                SqlCommand cmd = new SqlCommand("SP_ELIMINAR_FACTURA");
+                SqlCommand cmd = new SqlCommand("SP_ELIMINAR_FACTURA", _connection, _transaction);
+
+                cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("nro_factura", nroFactura);
 
                 cmd.ExecuteNonQuery();
 
-                //servicioDetalleFactura.Eliminar(null, nroFactura);
+                resultado = true;
             }
             catch (Exception ex)
             {

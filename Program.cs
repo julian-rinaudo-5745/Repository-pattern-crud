@@ -87,14 +87,14 @@ ServicioDetalleFactura servicioDetalleFactura = new ServicioDetalleFactura();
 //        Id = 1
 
 //    },
-//     Cliente = "Julian",
-//     Detalles = new List<DetalleFactura>()
+//    Cliente = "Julian",
+//    Detalles = new List<DetalleFactura>()
 //     {
 //        new DetalleFactura()
 //        {
 //            Articulo = new Articulo() { Id = 1},
 //            Cantidad = 2,
-//            PrecioVenta = 2000  
+//            PrecioVenta = 2000
 //        },
 //        new DetalleFactura()
 //        {
@@ -121,26 +121,29 @@ ServicioDetalleFactura servicioDetalleFactura = new ServicioDetalleFactura();
 //}
 
 
-Factura factura = new Factura
-{
-    NroFactura = 16,
-    Fecha = new DateTime(2000, 9, 28),
-    FormaPago = new FormaPago { Id = 1 },
-    Detalles = new List<DetalleFactura>
-            {
-                 new DetalleFactura()
-                {
-                    Id = 17,
-                    Articulo = new Articulo()
-                    {
-                        Id = 3,
-                    },
-                    PrecioVenta = 2700
-                }
-    }
-};
+//Factura factura = new Factura
+//{
+//    NroFactura = 16,
+//    Fecha = new DateTime(2000, 9, 28),
+//    FormaPago = new FormaPago { Id = 1 },
+//    Detalles = new List<DetalleFactura>
+//            {
+//                 new DetalleFactura()
+//                {
+//                    Id = 17,
+//                    Articulo = new Articulo()
+//                    {
+//                        Id = 3,
+//                    },
+//                    PrecioVenta = 2700
+//                }
+//    }
+//};
 
-servicioFactura.Editar(factura);
+//servicioFactura.Editar(factura);
+
+servicioFactura.Eliminar(20);
+
 
 //DetalleFactura detalleFactura = new DetalleFactura();
 
