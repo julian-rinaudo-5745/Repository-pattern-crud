@@ -50,7 +50,7 @@ namespace Practica01.datos.repositorios
         }
         public FormaPago ObtenerPorId(int id)
         {
-            FormaPago articulo = new FormaPago();
+            FormaPago formaPago = new FormaPago();
 
             try
             {
@@ -67,8 +67,8 @@ namespace Practica01.datos.repositorios
 
                     if (reader.Read())
                     {
-                        articulo.Id = (int)reader["id"];
-                        articulo.Nombre = (string)reader["nombre"];
+                        formaPago.Id = (int)reader["id"];
+                        formaPago.Nombre = (string)reader["nombre"];
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace Practica01.datos.repositorios
                 throw new Exception($"Error inesperado al obtener una forma de pago. Error: {ex.Message}");
             }
 
-            return articulo;
+            return formaPago;
         }
         public bool Crear(FormaPago formaPago)
         {

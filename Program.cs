@@ -6,6 +6,7 @@ using Practica01.servicios;
 //ServicioArticulo servicioArticulo = new ServicioArticulo();
 //ServicioFormaPago servicioFormaPago = new ServicioFormaPago();
 ServicioFactura servicioFactura = new ServicioFactura();
+ServicioDetalleFactura servicioDetalleFactura = new ServicioDetalleFactura();
 ///*
 // * CRUD ARTICULOs
 // */
@@ -79,30 +80,81 @@ ServicioFactura servicioFactura = new ServicioFactura();
  * CRUD Facturas
  */
 
-Factura factura = new Factura()
-{
-    FormaPago = new FormaPago()
-    {
-        Id = 1
+//Factura factura = new Factura()
+//{
+//    FormaPago = new FormaPago()
+//    {
+//        Id = 1
 
-    },
-     Cliente = "Julian",
-     Detalles = new List<DetalleFactura>()
-     {
-        new DetalleFactura()
-        {
-            Articulo = new Articulo() { Id = 1},
-            Cantidad = 2,
-            PrecioVenta = 2000  
-        },
-        new DetalleFactura()
-        {
-            Articulo = new Articulo() { Id = 3  },
-            Cantidad = 1,
-            PrecioVenta = 2400.20M
-        }
+//    },
+//     Cliente = "Julian",
+//     Detalles = new List<DetalleFactura>()
+//     {
+//        new DetalleFactura()
+//        {
+//            Articulo = new Articulo() { Id = 1},
+//            Cantidad = 2,
+//            PrecioVenta = 2000  
+//        },
+//        new DetalleFactura()
+//        {
+//            Articulo = new Articulo() { Id = 3  },
+//            Cantidad = 1,
+//            PrecioVenta = 2400.20M
+//        }
+//    }
+//};
+
+//servicioFactura.Crear(factura);
+
+//List<Factura> facturas = servicioFactura.ObtenerTodo();
+
+//foreach(Factura factura in facturas)
+//{
+//    Console.WriteLine($"nroFactura: {factura.NroFactura}, fecha: {factura.Fecha}, forma de pago: {factura.FormaPago.Nombre}, cliente: {factura.Cliente}");
+
+//    foreach(DetalleFactura detalle in factura.Detalles)
+//    {
+
+//        Console.WriteLine($"Nombe del articulo: {detalle.Articulo.Nombre}, cantidad: {detalle.Cantidad}, precio de venta: {detalle.PrecioVenta}");
+//    };
+//}
+
+
+Factura factura = new Factura
+{
+    NroFactura = 16,
+    Fecha = new DateTime(2000, 9, 28),
+    FormaPago = new FormaPago { Id = 1 },
+    Detalles = new List<DetalleFactura>
+            {
+                 new DetalleFactura()
+                {
+                    Id = 17,
+                    Articulo = new Articulo()
+                    {
+                        Id = 3,
+                    },
+                    PrecioVenta = 2700
+                }
     }
 };
 
-servicioFactura.Crear(factura);
+servicioFactura.Editar(factura);
+
+//DetalleFactura detalleFactura = new DetalleFactura();
+
+//DetalleFactura detalle = new DetalleFactura()
+//{
+//    Id = 17,
+//    Articulo = new Articulo()
+//    {
+//        Id = 7,
+//    },
+//    PrecioVenta = 700
+//};
+//int nroFactura = 16;
+
+//servicioDetalleFactura.Editar(detalle, nroFactura);
+
 

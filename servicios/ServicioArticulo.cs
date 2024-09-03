@@ -35,7 +35,7 @@ namespace Practica01.servicios
         {
             Articulo articulo = new Articulo();
 
-            if (id < 0)
+            if (id <= 0)
             {
                 Console.Error.WriteLine($"Id no válido. Id: {id}");
                 return articulo;

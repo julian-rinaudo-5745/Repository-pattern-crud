@@ -89,31 +89,39 @@ namespace Practica01.servicios
         {
             bool resultado = false;
 
-            //int nroFactura = factura.NroFactura;
 
-            //if (factura != null)
-            //{
-            //    if (nroFactura == 0)
-            //    {
-            //        Console.Error.WriteLine($"Número de factura no válido. Nro factura:{nroFactura}");
-            //        return false;
-            //    }
+            if (factura != null)
+            {
 
-            //    try
-            //    {
-            //        resultado = _unitOfWork.RepositorioFactura.Crear(factura);
-            //        Console.WriteLine("Factura Editada con éxito");
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Console.Error.WriteLine(ex.Message);
-            //    }
-            //    finally
-            //    {
-            //        _unitOfWork.Dispose();
-            //    }
+                try
+                {
+                    resultado = _unitOfWork.RepositorioFactura.Editar(factura);
 
-            //}
+                    if (resultado) 
+                    {
+                        if (factura.Detalles.Count > 0)
+                        {
+                            foreach (DetalleFactura detalle in factura.Detalles)
+                            {
+                                _unitOfWork.RepositorioDetalleFactura.Editar(detalle, factura.NroFactura);
+                            }
+
+                        }
+
+                    }
+
+                    _unitOfWork.GuardarCambios();
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    _unitOfWork.Dispose();
+                }
+
+            }
 
             return resultado;
         }
@@ -126,7 +134,13 @@ namespace Practica01.servicios
                 try
                 {
                     resultado = _unitOfWork.RepositorioFactura.Eliminar(nroFactura);
-                    Console.WriteLine("Factura eliminada con éxito");
+                    if (resultado)
+                    {
+
+                        Console.WriteLine("Factura Editada con éxito");
+                    }
+
+
                 }
                 catch (Exception ex)
                 {

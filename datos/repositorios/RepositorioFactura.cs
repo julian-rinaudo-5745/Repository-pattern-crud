@@ -20,7 +20,11 @@ namespace Practica01.datos.repositorios
         private ServicioFormaPago servicioFormaPago;
         private ServicioDetalleFactura servicioDetalleFactura;
 
-        public RepositorioFactura() { }
+        public RepositorioFactura() 
+        {
+            servicioFormaPago = new ServicioFormaPago();
+            servicioDetalleFactura = new ServicioDetalleFactura();
+        }
         public RepositorioFactura(SqlConnection connection, SqlTransaction transaction)
         {
             _connection = connection;
@@ -56,7 +60,7 @@ namespace Practica01.datos.repositorios
                             Fecha = (DateTime)reader["fecha"],
                             FormaPago = servicioFormaPago.ObtenerPorId(idFormaPago),
                             Cliente = (string)reader["cliente"],
-                            //Detalles = servicioDetalleFactura.ObtenerPorIdONroFactura(null, nroFactura)
+                            Detalles = servicioDetalleFactura.ObtenerPorNroFactura(nroFactura)
                         };
 
                         facturas.Add(factura);
@@ -106,27 +110,20 @@ namespace Practica01.datos.repositorios
 
             try
             {
-                SqlCommand cmd = new SqlCommand("SP_EDITAR_FACTURA");
 
-                cmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand cmd = new SqlCommand("SP_EDITAR_FACTURA", _connection, _transaction);
 
-                cmd.Parameters.AddWithValue("nro_factura", factura.Fecha);
-                cmd.Parameters.AddWithValue("fecha", factura.Fecha);
-                cmd.Parameters.AddWithValue("id_forma_pago", factura.FormaPago.Id);
-                cmd.Parameters.AddWithValue("cliente", factura.Cliente);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("nro_factura", factura.NroFactura);
+                    cmd.Parameters.AddWithValue("fecha", factura.Fecha);
+                    cmd.Parameters.AddWithValue("id_forma_pago", factura.FormaPago.Id);
+                    cmd.Parameters.AddWithValue("cliente", factura.Cliente);
 
-                if (factura.Detalles.Count > 0)
-                {
-                    foreach (DetalleFactura detalle in factura.Detalles)
-                    {
-                        //servicioDetalleFactura.Editar(detalle);
-                    }
+                    int filasAfectadas = cmd.ExecuteNonQuery();
 
-                }
+                    resultado = filasAfectadas == 1;
 
-                resultado = true;
 
             }
             catch (Exception ex)

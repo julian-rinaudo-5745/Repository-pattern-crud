@@ -17,7 +17,10 @@ namespace Practica01.datos.repositorios
         private SqlTransaction _transaction;
         private ServicioArticulo servicioArticulo;
         
-        public RepositorioDetalleFactura() { }
+        public RepositorioDetalleFactura() 
+        {
+            servicioArticulo = new ServicioArticulo();
+        }
         public RepositorioDetalleFactura(SqlConnection connection, SqlTransaction transaction) 
         {
             _connection = connection;
@@ -46,8 +49,10 @@ namespace Practica01.datos.repositorios
 
                         DetalleFactura detalle = new DetalleFactura()
                         {
+                            Id = (int)reader["id"],
                             Articulo = servicioArticulo.ObtenerPorId(articuloId),
-                            Cantidad = (int)reader["cantidad"]
+                            Cantidad = (int)reader["cantidad"],
+                            PrecioVenta = (decimal)reader["precio_venta"]
                         };
 
                         listDetalles.Add(detalle);
@@ -62,6 +67,49 @@ namespace Practica01.datos.repositorios
 
             return listDetalles;
         }
+        public List<DetalleFactura> ObtenerPorNroFactura(int nroFactura)
+        {
+            List<DetalleFactura> listDetalles = new List<DetalleFactura>();
+
+            try
+            {
+                using (var cnn = new SqlConnection(Properties.Resources.cnnString))
+                {
+                    cnn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SP_OBTENER_DETALLES_POR_NRO_FACTURA", cnn);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("nro_factura", nroFactura);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        int articuloId = (int)reader["id_articulo"];
+
+                        DetalleFactura detalle = new DetalleFactura()
+                        {
+                            Id = (int)reader["id"],
+                            Articulo = servicioArticulo.ObtenerPorId(articuloId),
+                            Cantidad = (int)reader["cantidad"],
+                            PrecioVenta = (decimal)reader["precio_venta"]
+                        };
+
+                        listDetalles.Add(detalle);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al obtener todos los detalles por nro de factura. Error: {ex.Message}");
+            }
+
+            return listDetalles;
+        }
+
         public bool Crear(int nroFactura, DetalleFactura detalleFactura)
         {
             bool resultado = false;
@@ -87,9 +135,35 @@ namespace Practica01.datos.repositorios
 
             return resultado;
         }
-        public bool Editar(DetalleFactura detalleFactura)
+        public bool Editar(DetalleFactura detalleFactura, int nroFactura)
         {
-            throw new NotImplementedException();
+            bool resultado = false;
+
+            try
+            {
+
+
+                    SqlCommand cmd = new SqlCommand("SP_EDITAR_DETALLE", _connection, _transaction);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("id", detalleFactura.Id);
+                    cmd.Parameters.AddWithValue("id_articulo", detalleFactura.Articulo.Id);
+                    cmd.Parameters.AddWithValue("cantidad", detalleFactura.Cantidad);
+                    cmd.Parameters.AddWithValue("precio_venta", detalleFactura.PrecioVenta);
+                    cmd.Parameters.AddWithValue("nro_factura", nroFactura);
+
+                    int filasAfectadas = cmd.ExecuteNonQuery();
+
+                    resultado = filasAfectadas == 1;
+            }
+
+
+            catch (Exception ex)
+            {
+                throw new Exception($"Error inesperado al editar un detalle. Error: {ex.Message}");
+            }
+
+            return resultado;
         }
 
         public bool Eliminar(int detalleId)

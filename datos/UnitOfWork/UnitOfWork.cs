@@ -49,6 +49,7 @@ namespace Practica01.datos.UnitOfWork
             try
             {
                 _transaction.Commit();
+                Console.WriteLine("Transacción exitosa");
             }catch(Exception ex)
             {
                 _transaction.Rollback();

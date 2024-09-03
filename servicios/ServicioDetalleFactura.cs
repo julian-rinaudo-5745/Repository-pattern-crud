@@ -37,6 +37,27 @@ namespace Practica01.servicios
 
             return detalles;
         }
+
+        public List<DetalleFactura> ObtenerPorNroFactura(int nroFactura)
+        {
+            List<DetalleFactura> detalles = new List<DetalleFactura>();
+
+            try
+            {
+                if(nroFactura > 0)
+                {
+
+                    detalles = repositorioDetalleFactura.ObtenerPorNroFactura(nroFactura);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
+
+            return detalles;
+        }
+
         public bool Crear(int nroFactura, DetalleFactura detalle)
         {
             bool resultado = false;
@@ -52,7 +73,12 @@ namespace Practica01.servicios
                 try
                 {
                     resultado = _unitOfWork.RepositorioDetalleFactura.Crear(nroFactura, detalle);
-                    Console.WriteLine("Detalle creado con éxito");
+
+                    if (resultado)
+                    {
+
+                        Console.WriteLine("Detalle creado con éxito");
+                    }
                     _unitOfWork.GuardarCambios();
                 }
                 catch (Exception ex)
@@ -65,6 +91,39 @@ namespace Practica01.servicios
                 }
 
             }
+
+            return resultado;
+        }
+
+        public bool Editar(DetalleFactura detalleFactura, int nroFactura)
+        {
+            bool resultado = false;
+
+
+            if(nroFactura <= 0)
+            {
+                Console.WriteLine($"Nro de factura no válido. Nro factura: {nroFactura}");
+                return false;
+            }
+
+            if (detalleFactura != null)
+            {
+                try
+                {
+                    resultado = repositorioDetalleFactura.Editar(detalleFactura, nroFactura);
+
+                    if (resultado)
+                    {
+                        Console.WriteLine("Detalle editado con éxito");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex.Message);
+                }
+            }
+
 
             return resultado;
         }

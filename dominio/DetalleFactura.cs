@@ -9,6 +9,7 @@ namespace Practica01.dominio
 {
     public class DetalleFactura
     { 
+        public int Id { get; set; }
         public Articulo Articulo { get; set; }
         public int Cantidad { get; set; }
         public decimal PrecioVenta { get; set; }
