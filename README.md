@@ -19,6 +19,7 @@ proyecto [Practica01]:
 └── servicios
     └── clases de servicio necesarias para gestionar el CRUD de la entidad principal
 
+```
 ## Requisitos adicionales
 
 1. **Base de datos**:  
