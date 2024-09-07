@@ -1,3 +1,4 @@
+SET DATEFORMAT DMY;
 CREATE DATABASE facturacion;
 GO
 USE facturacion
@@ -36,16 +37,6 @@ CREATE TABLE detalles (
 	CONSTRAINT fk_detalles_articulos FOREIGN KEY (id_articulo)
 		REFERENCES articulos (id)
 )
-
-INSERT INTO articulos (nombre, precio_unitario) 
-VALUES ('lapicera', 1000),
-	   ('Cartuchera', 2400.20),
-	   ('Mochila', 12999.99);
-
-INSERT INTO formas_pago (nombre) 
-VALUES ('Efectivo'),
-	   ('Debito');
-
 GO
 
 CREATE PROCEDURE SP_OBTENER_ARTICULOS 
